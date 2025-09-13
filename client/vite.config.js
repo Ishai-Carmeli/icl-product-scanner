@@ -8,4 +8,5 @@ export default defineConfig({
     react(),
     basicSsl()
   ],
+  base: "/icl-product-scanner/",
 })
