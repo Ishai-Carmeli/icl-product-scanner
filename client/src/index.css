@@ -1,0 +1,44 @@
+index.css
+
+/* Reset margins & paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Improve typography defaults */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Make images and media responsive */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Anchor tags without ugly blue underline */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Root container fills screen */
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
