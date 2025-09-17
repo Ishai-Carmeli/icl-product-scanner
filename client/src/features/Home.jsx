@@ -1,28 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { style, theme } from "../AppStyle";
-import { ThemeProvider } from "@mui/material/styles";
+import { useRef, useState } from "react";
+import { style } from "../AppStyle";
 import {
   Container,
   Typography,
   Button,
-  CssBaseline,
   Stack,
   Box,
   CircularProgress,
 } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Tesseract from "tesseract.js";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
-import rtlPlugin from "stylis-plugin-rtl";
-import { prefixer } from "stylis";
 import AnalyticsService from "../services/AnalyticsService";
+import { useNavigate } from "react-router";
 
 export const Home = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState(false);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleCapture = async (event) => {
     const file = event.target.files[0];
@@ -144,6 +140,18 @@ export const Home = () => {
             onClick={openCamera}
           >
             לסריקה
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            variant="text"
+            color="primary"
+            disabled
+            onClick={() => {
+              navigate("/smart-scan");
+            }}
+          >
+             סריקה מהירה (בפיתוח)
           </Button>
         </Box>
         {image && (

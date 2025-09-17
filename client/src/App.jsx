@@ -19,6 +19,7 @@ import { prefixer } from "stylis";
 import AnalyticsService from "./services/AnalyticsService";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Home } from "./features/Home";
+import { WebcamCapture } from "./features/WebcamCapture";
 
 const cacheRtl = createCache({
   key: "mui-rtl",
@@ -41,6 +42,7 @@ const App = () => {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/smart-scan" element={<WebcamCapture />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>

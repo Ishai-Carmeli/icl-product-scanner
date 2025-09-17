@@ -45,6 +45,11 @@ const style = {
     gap: 10,
     alignItems: "center",
   },
+  webcam: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
 };
 
 // Dark theme
