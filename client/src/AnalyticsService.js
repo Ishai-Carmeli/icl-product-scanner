@@ -38,9 +38,10 @@ const createAnalyticsService = () => {
       console.warn("AnalyticsService not initialized yet");
       return;
     }
-    
+
     window.gtag("event", eventName, {
       event_category: payload.category || "default",
+      user_id_param: userId,
       event_label: payload.label,
       value: payload.value,
     });
