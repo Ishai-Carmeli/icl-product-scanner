@@ -16,14 +16,14 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
-import ReactGA from "react-ga4";
+import AnalyticsService from "./AnalyticsService";
+
+AnalyticsService.init();
 
 const cacheRtl = createCache({
   key: "mui-rtl",
   stylisPlugins: [prefixer, rtlPlugin],
 });
-
-ReactGA.initialize("G-V523HZCZZ7");
 
 const App = () => {
   const [image, setImage] = useState(null);
@@ -107,16 +107,12 @@ const App = () => {
       const skuMatch = text.match(/\d{10,15}/);
       if (skuMatch) {
         const sku = skuMatch[0];
-        if (window.gtag) {
-          window.gtag("event", "scan_success", { sku });
-        }
+        AnalyticsService.trackEvent("scan_success", { label: "sku" });
         const searchUrl = `https://365mashbir.co.il/search?q=${sku}`;
         window.location.href = searchUrl;
       } else {
         setFailed(true);
-        if (window.gtag) {
-          window.gtag("event", "scan_fail", { reason: "no_sku_found" });
-        }
+        AnalyticsService.trackEvent("scan_fail", { label: "no_sku_found" });
         console.error(err);
       }
     } catch (err) {
@@ -126,20 +122,16 @@ const App = () => {
   };
 
   const openCamera = () => {
-    if (window.gtag) {
-      window.gtag("event", "scan_button_click");
-    }
+    AnalyticsService.trackEvent("scan_button_click");
     inputRef.current.click();
   };
 
   useEffect(() => {
-    if (window.gtag) {
-      window.gtag("event", "visit", {
-        page_title: "OCR Scanner",
-        page_location: window.location.href,
-        page_path: window.location.pathname,
-      });
-    }
+    AnalyticsService.trackEvent("visit", {
+      category: "Page View",
+      label: "OCR Scanner",
+      value: window.location.pathname, // optional, can use value for path
+    });
   }, []);
 
   return (
