@@ -18,8 +18,6 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import AnalyticsService from "./AnalyticsService";
 
-AnalyticsService.init();
-
 const cacheRtl = createCache({
   key: "mui-rtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -127,6 +125,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    AnalyticsService.init();
     AnalyticsService.trackEvent("visit", {
       category: "Page View",
       label: "OCR Scanner",

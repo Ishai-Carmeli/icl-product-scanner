@@ -1,45 +1,52 @@
-import ReactGA from "react-ga4";
 import DataService from "./DataService";
 import { nanoid } from "nanoid";
 
+const GA_MEASUREMENT_ID = "G-V523HZCZZ7";
+
 const createAnalyticsService = () => {
   let initialized = false;
-  let userId = null; 
+  let userId = null;
 
   const init = () => {
-    if (!initialized) {
-      ReactGA.initialize("G-V523HZCZZ7");
-      initialized = true;
-      userId = DataService.getItem("userId");
-      if (!userId) {
-        setUserId();
-      } else {
-        ReactGA.set({ user_id: userId });
-      }
+    if (initialized) return;
+    userId = DataService.getItem("userId");
+    if (!userId) {
+      setUserId();
     }
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", GA_MEASUREMENT_ID, { user_id: userId });
+    initialized = true;
   };
 
   const setUserId = () => {
     userId = nanoid();
-    ReactGA.set({ user_id: userId });
     DataService.setItem("userId", userId);
+    if (initialized && window.gtag) {
+      window.gtag("config", GA_MEASUREMENT_ID, { user_id: userId });
+    }
   };
 
   const trackEvent = (eventName, payload = {}) => {
-    if (!initialized) {
+    if (!initialized || !window.gtag) {
       console.warn("AnalyticsService not initialized yet");
       return;
     }
-
-    ReactGA.event({
-      category: payload.category || "default",
-      action: eventName,
-      label: payload.label,
+    
+    window.gtag("event", eventName, {
+      event_category: payload.category || "default",
+      event_label: payload.label,
       value: payload.value,
     });
   };
 
-  return { init, trackEvent };
+  return { init, setUserId, trackEvent };
 };
 
 const AnalyticsService = createAnalyticsService();
