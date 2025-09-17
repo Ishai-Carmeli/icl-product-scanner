@@ -146,7 +146,7 @@ export const Home = () => {
           <Button
             variant="text"
             color="primary"
-            disabled
+            // disabled
             onClick={() => {
               navigate("/smart-scan");
             }}
