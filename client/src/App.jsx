@@ -113,7 +113,7 @@ const App = () => {
       } else {
         setFailed(true);
         AnalyticsService.trackEvent("scan_fail", { label: "no_sku_found" });
-        console.error(err);
+        console.error("Couldn't read text");
       }
     } catch (err) {
       setFailed(true);
