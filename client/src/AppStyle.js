@@ -50,8 +50,8 @@ const style = {
 // Dark theme
 const theme = createTheme({
   direction: "rtl",
-  colorSchemes: {
-    dark: true,
+  palette: {
+    mode: "dark",
   },
 });
 
